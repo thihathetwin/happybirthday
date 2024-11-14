@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday!</title>
+  <style>
+    /* General styles */
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-color: #fbe4e6;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    /* Button styles */
+    #clickButton {
+      padding: 15px 30px;
+      font-size: 1.5em;
+      cursor: pointer;
+      background-color: #ff69b4;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+      z-index: 1;
+    }
+    #clickButton:hover {
+      background-color: #ff1493;
+    }
+
+    /* Happy Birthday text */
+    #birthdayMessage {
+      font-size: 3em;
+      color: #ff69b4;
+      font-weight: bold;
+      opacity: 0;
+      transform: scale(0.1);
+      transition: opacity 1s ease, transform 1s ease;
+      z-index: 1;
+    }
+
+    /* Show message with zoom-out effect */
+    #birthdayMessage.show {
+      opacity: 1;
+      transform: scale(1);
+      animation: zoomOut 15s forwards;
+    }
+
+    /* CSS flower animation */
+    .flower {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background-color: #ff69b4;
+      opacity: 0;
+      animation: float 6s ease-in-out infinite, drift 4s ease-in-out infinite, twinkle 2s infinite;
+    }
+    .flower:nth-child(odd) { background-color: #ff8da1; }
+    .flower:nth-child(even) { background-color: #ffb6c1; }
+
+    /* Flower animation keyframes */
+    @keyframes float {
+      0% {
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        transform: translateY(-20px) scale(0.8);
+      }
+    }
+    @keyframes drift {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(20px); }
+      100% { transform: translateX(-20px); }
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; }
+      50% { opacity: 0.8; }
+    }
+
+    /* Zoom-out effect for the text */
+    @keyframes zoomOut {
+      0% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(5); }
+    }
+
+    /* Image of you two */
+    #photo {
+      width: 300px;
+      border-radius: 12px;
+      display: none;
+      opacity: 0;
+      transition: opacity 2s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    #photo.show {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Birthday message paragraph */
+    #birthdayParagraph {
+      font-size: 1.2em;
+      color: #333;
+      margin-top: 20px;
+      display: none;
+      opacity: 0;
+      transition: opacity 2s ease;
+    }
+
+    #birthdayParagraph.show {
+      display: block;
+      opacity: 1;
+    }
+
+    /* Hide the audio controls */
+    #backgroundMusic {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="clickButton" onclick="startSurprise()">Click Me</button>
+  <div id="birthdayMessage">Happy Birthday! PT lay </div>
+  <img id="photo" src="wish.JPG" alt="Happy Moments Together">
+  <p id="birthdayParagraph">Happy Birthday, PT lay. 🌹 Today marks 775 days of us, 775 days of shared laughter, dreams, and memories. Each one of those days has been brighter because of you, and I’m grateful for every moment we’ve shared. Here’s to more days, more memories, and a lifetime together. You are my heart, my happiness, my everything. I love you endlessly, and today, I celebrate you and the beautiful journey we’re on. ❤️</p>
+
+
+  <!-- Background Music -->
+  <audio id="backgroundMusic" loop>
+    <source src="music.mp3" type="audio/mp3">
+    
+  </audio>
+
+  <script>
+    function startSurprise() {
+      // Hide the button
+      document.getElementById("clickButton").style.display = "none";
+
+      // Play background music
+      const backgroundMusic = document.getElementById("backgroundMusic");
+      backgroundMusic.play();
+
+      // Show the CSS flower animation
+      createFlowers();
+
+      // Show the birthday message with zoom-out effect
+      const birthdayMessage = document.getElementById("birthdayMessage");
+      birthdayMessage.classList.add("show");
+
+      // After 10 seconds, hide the message and show the photo and paragraph
+      setTimeout(() => {
+        birthdayMessage.classList.remove("show");
+        document.getElementById("photo").classList.add("show");
+        document.getElementById("birthdayParagraph").classList.add("show");
+      }, 10000); // 10 seconds delay
+    }
+
+    function createFlowers() {
+      // Create 30 flowers for continuous background twinkling
+      for (let i = 0; i < 30; i++) {
+        const flower = document.createElement("div");
+        flower.classList.add("flower");
+        
+        // Set random positions for flowers across the whole screen
+        flower.style.left = Math.random() * 100 + "vw";
+        flower.style.top = Math.random() * 100 + "vh";
+        
+        // Set random animation delay to make each flower twinkle at different times
+        flower.style.animationDelay = Math.random() * 4 + "s";
+        document.body.appendChild(flower);
+
+        // Reposition flowers for a continuous effect
+        flower.addEventListener("animationiteration", () => {
+          flower.style.left = Math.random() * 100 + "vw";
+          flower.style.top = Math.random() * 100 + "vh";
+        });
+      }
+    }
+  </script>
+</body>
+</html>
